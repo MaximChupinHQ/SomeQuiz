@@ -22,7 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ResultActivity" />
-        <activity android:name=".CheatActivity" />
         <activity android:name=".QuizActivity">
            <!--
                <intent-filter>
