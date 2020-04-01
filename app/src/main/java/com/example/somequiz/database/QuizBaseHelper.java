@@ -3,6 +3,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.example.somequiz.database.QuizDbSchema.QuizQuestionTable;
+import com.example.somequiz.database.QuizDbSchema.QuizAnswersTable;
 
 public class QuizBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
@@ -16,9 +17,19 @@ public class QuizBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + QuizQuestionTable.NAME +
                 "(" +
-                "_id integer primary key autoincrement, " +
-                QuizQuestionTable.Cols.UUID + ", " +
-                QuizQuestionTable.Cols.QuestionText +
+                QuizQuestionTable.Cols.ID + " integer primary key autoincrement, " +
+                QuizQuestionTable.Cols.QuestionText + " text" +
+                ")"
+        );
+
+        db.execSQL("create table " + QuizAnswersTable.NAME +
+                "(" +
+                QuizAnswersTable.Cols.ID + " integer primary key autoincrement, " +
+                QuizAnswersTable.Cols.AnswerText + " text, " +
+                QuizAnswersTable.Cols.IsRight + " integer, " +
+                QuizAnswersTable.Cols.QuestionId + " integer, " +
+                "CHECK( " + QuizAnswersTable.Cols.IsRight + " in (0,1)" + " ), " +
+                "FOREIGN KEY (" + QuizAnswersTable.Cols.QuestionId + ") REFERENCES " + QuizQuestionTable.NAME + " (" + QuizQuestionTable.Cols.ID + ")" +
                 ")"
         );
     }
