@@ -3,14 +3,14 @@ package com.example.somequiz;
 import java.util.UUID;
 
 public class QuestionV2 {
-    private UUID mId;
+    private Integer mId;
     private String mQuestionText;
 
-    public QuestionV2(){
-        mId = UUID.randomUUID();
+    public QuestionV2(Integer id) {
+        mId = id;
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return mId;
     }
 

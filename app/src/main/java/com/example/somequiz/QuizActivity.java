@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.somequiz.database.QuestionLab;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

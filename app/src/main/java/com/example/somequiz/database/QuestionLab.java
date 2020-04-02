@@ -1,12 +1,16 @@
-package com.example.somequiz;
+package com.example.somequiz.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.example.somequiz.database.QuizBaseHelper;
-import com.example.somequiz.database.QuizDbSchema;
+
+import com.example.somequiz.Answer;
+import com.example.somequiz.QuestionV2;
 import com.example.somequiz.database.QuizDbSchema.QuizQuestionTable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class QuestionLab {
@@ -48,8 +52,47 @@ public class QuestionLab {
 
     }
 
-    public QuestionV2 getQuestion(UUID id){
-        return null;
+    private QuestionCursor queryQuestions (String whereClause, String[] whereArgs){
+        Cursor cursor = mDatabase.query(
+                QuizQuestionTable.NAME,
+                null, //columns с null выдает все (*)
+                whereClause,
+                whereArgs,
+                null, //group by
+                null,//having
+                null //order by
+        );
+        return new QuestionCursor(cursor);
+    }
+
+    public List<QuestionV2> getQuestions(){
+        List<QuestionV2> questions = new ArrayList<>();
+        QuestionCursor cursor = queryQuestions(null,null);
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                questions.add(cursor.getQuestion());
+                cursor.moveToNext();
+            }
+        }finally {
+            cursor.close();
+        }
+        return questions;
+    }
+
+    public QuestionV2 getQuestion(Integer id){
+        QuestionCursor cursor = queryQuestions(QuizQuestionTable.Cols.ID + "= ?",
+                new String[]{ id.toString() });
+
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+            cursor.moveToFirst();
+            return cursor.getQuestion();
+        } finally {
+            cursor.close();
+        }
     }
 
 }
