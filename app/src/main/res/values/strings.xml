@@ -19,4 +19,15 @@
     <string name="judgment_toast">Cheating is wrong.</string>
     <string name="start_new_game">Play again!</string>
     <string name="new_game">New game!</string>
+    <string name="question_title_hint">Enter the question</string>
+    <string name="answer_title_hint">Enter the answer</string>
+    <string name="question_title_label">Question</string>
+    <string name="question_answer_label">Answer</string>
+    <string name="answer_right_label">Right_answer</string>
+    <string name="list_of_questions">List of Questions</string>
+    <string name="new_question">New Question</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
+    <string name="subtitle_format">%1$d questions</string>
+
 </resources>

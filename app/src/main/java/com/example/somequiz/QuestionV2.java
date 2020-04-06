@@ -1,5 +1,7 @@
 package com.example.somequiz;
 
+import com.example.somequiz.database.QuestionLab;
+
 import java.util.UUID;
 
 public class QuestionV2 {
