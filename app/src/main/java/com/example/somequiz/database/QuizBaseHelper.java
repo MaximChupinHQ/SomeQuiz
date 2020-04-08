@@ -17,6 +17,7 @@ public class QuizBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + QuizQuestionTable.NAME +
                 "(" +
+                QuizQuestionTable.Cols.UUID + " text, " +
                 QuizQuestionTable.Cols.ID + " integer primary key autoincrement, " +
                 QuizQuestionTable.Cols.QuestionText + " text" +
                 ")"
@@ -24,6 +25,7 @@ public class QuizBaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("create table " + QuizAnswersTable.NAME +
                 "(" +
+                QuizAnswersTable.Cols.UUID + " text, " +
                 QuizAnswersTable.Cols.ID + " integer primary key autoincrement, " +
                 QuizAnswersTable.Cols.AnswerText + " text, " +
                 QuizAnswersTable.Cols.IsRight + " integer, " +

@@ -5,6 +5,8 @@ import android.database.CursorWrapper;
 
 import com.example.somequiz.QuestionV2;
 
+import java.util.UUID;
+
 import static com.example.somequiz.database.QuizDbSchema.*;
 
 public class QuestionCursor extends CursorWrapper {
@@ -13,9 +15,9 @@ public class QuestionCursor extends CursorWrapper {
     }
 
     public QuestionV2 getQuestion(){
-        Integer id = getInt(getColumnIndex(QuizQuestionTable.Cols.ID));
+        String uuidString = getString(getColumnIndex(QuizQuestionTable.Cols.UUID));
         String questionText = getString(getColumnIndex(QuizQuestionTable.Cols.QuestionText));
-        QuestionV2 question = new QuestionV2(id);
+        QuestionV2 question = new QuestionV2(UUID.fromString(uuidString));
         question.setQuestionText(questionText);
         return question;
     }

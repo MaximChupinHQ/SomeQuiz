@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="NamespaceTypo">
     <item
-        android:id="@+id/new_question_button"
-        android:title="@string/new_question"
-        android:icon="@drawable/ic_menu_add"
+        android:id="@+id/delete_question_button"
+        android:title="@string/delete_question"
+        android:icon="@drawable/ic_menu_delete"
         app:showAsAction="ifRoom|withText"
         />
 </menu>

@@ -27,7 +27,7 @@ public class QuestionLab {
 
     private static ContentValues getQuestionContentValues (QuestionV2 question){
         ContentValues values = new ContentValues();
-        values.put(QuizQuestionTable.Cols.ID, question.getId().toString());
+        values.put(QuizQuestionTable.Cols.UUID, question.getId().toString());
         values.put(QuizQuestionTable.Cols.QuestionText, question.getQuestionText());
         System.out.println("QuestionContextValues.QuestionText = " + question.getQuestionText());
         return values;
@@ -44,20 +44,19 @@ public class QuestionLab {
     }
 
     public void updateQuestion (QuestionV2 question) {
-        String id = question.getId().toString();
+        String uuid = question.getId().toString();
         ContentValues values = getQuestionContentValues(question);
         System.out.println(values);
         mDatabase.update(QuizQuestionTable.NAME, values,
-                QuizQuestionTable.Cols.ID + " = ?",
-                new String[] {id});
+                QuizQuestionTable.Cols.UUID + " = ?",
+                new String[] {uuid});
     }
 
-    public Integer maxQuestionId(){
-        String sqlQuery = "select max(" + QuizQuestionTable.Cols.ID + ") as max_id from " + QuizQuestionTable.NAME;
-        Cursor cursor = mDatabase.rawQuery(sqlQuery,null);
-        cursor.moveToFirst();
-        Integer maxId = cursor.getInt(cursor.getColumnIndex("max_id"));
-        return maxId;
+    public void deleteQuestion (QuestionV2 question) {
+        String uuid = question.getId().toString();
+        mDatabase.delete(QuizQuestionTable.NAME,
+                QuizQuestionTable.Cols.UUID + " = ?",
+                new String[] {uuid});
     }
 
     public void addQAnswer (Answer answer) {
@@ -92,9 +91,9 @@ public class QuestionLab {
         return questions;
     }
 
-    public QuestionV2 getQuestion(Integer id){
-        QuestionCursor cursor = queryQuestions(QuizQuestionTable.Cols.ID + "= ?",
-                new String[]{ id.toString() });
+    public QuestionV2 getQuestion(UUID uuid){
+        QuestionCursor cursor = queryQuestions(QuizQuestionTable.Cols.UUID + "= ?",
+                new String[]{ uuid.toString() });
 
         try {
             if (cursor.getCount() == 0) {

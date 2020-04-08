@@ -1,17 +1,27 @@
 package com.example.somequiz;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.somequiz.database.QuestionLab;
+
+import java.util.UUID;
 
 import static android.widget.CompoundButton.*;
 
@@ -28,7 +38,7 @@ public class QuestionFragment extends Fragment {
     private CheckBox mRightAnswer3;
     private CheckBox mRightAnswer4;
 
-    public static QuestionFragment newInstance (Integer questionId) {
+    public static QuestionFragment newInstance (UUID questionId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_QUESTION_ID, questionId);
         QuestionFragment questionFragment = new QuestionFragment();
@@ -68,8 +78,27 @@ public class QuestionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //получение переданного ID вопроса из активности
-        Integer questionId = (Integer) getArguments().getSerializable(ARG_QUESTION_ID);
+        UUID questionId = (UUID) getArguments().getSerializable(ARG_QUESTION_ID);
         mQuestion = QuestionLab.get(getActivity()).getQuestion(questionId);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_question, menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.delete_question_button:
+                QuestionLab questionLab = QuestionLab.get(getActivity());
+                questionLab.deleteQuestion(mQuestion);
+                getActivity().finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void onPause(){
@@ -79,7 +108,7 @@ public class QuestionFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_question,container,false);
+        View v = inflater.inflate(R.layout.fragment_question, container, false);
         mTitleQuestion = (EditText) v.findViewById(R.id.question_title);
         mTitleQuestion.setText(mQuestion.getQuestionText());
         mTitleQuestion.addTextChangedListener(new TextWatcher() {

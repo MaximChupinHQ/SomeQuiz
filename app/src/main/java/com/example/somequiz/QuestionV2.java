@@ -5,14 +5,18 @@ import com.example.somequiz.database.QuestionLab;
 import java.util.UUID;
 
 public class QuestionV2 {
-    private Integer mId;
+    private UUID mId;
     private String mQuestionText;
 
-    public QuestionV2(Integer id) {
+    public QuestionV2(){
+        this(UUID.randomUUID());
+    }
+
+    public QuestionV2(UUID id) {
         mId = id;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return mId;
     }
 

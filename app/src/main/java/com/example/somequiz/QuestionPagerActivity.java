@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.somequiz.database.QuestionLab;
 
 import java.util.List;
+import java.util.UUID;
 
 public class QuestionPagerActivity extends AppCompatActivity {
 
@@ -21,7 +22,7 @@ public class QuestionPagerActivity extends AppCompatActivity {
     private List<QuestionV2> mQuestions;
     private static final String EXTRA_QUESTION_ID = "questionId";
 
-    public static Intent newIntent(Context packageContext, Integer questionId){
+    public static Intent newIntent(Context packageContext, UUID questionId){
         Intent intent = new Intent(packageContext, QuestionPagerActivity.class);
         intent.putExtra(EXTRA_QUESTION_ID, questionId);
         return intent;
@@ -31,7 +32,7 @@ public class QuestionPagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_pager);
-        Integer questionId = (Integer) getIntent().getSerializableExtra(EXTRA_QUESTION_ID);
+        UUID questionId = (UUID) getIntent().getSerializableExtra(EXTRA_QUESTION_ID);
         mViewPager = findViewById(R.id.question_view_pager);
         mQuestions = QuestionLab.get(getApplicationContext()).getQuestions();
         FragmentManager fm = getSupportFragmentManager();

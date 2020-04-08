@@ -93,6 +93,7 @@ public class QuestionListFragment extends Fragment {
         updateUI();
         return view;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -111,12 +112,10 @@ public class QuestionListFragment extends Fragment {
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
-        Integer maxId;
         switch (item.getItemId()){
             case R.id.new_question_button:
                 QuestionLab questionLab = QuestionLab.get(getActivity());
-                maxId = questionLab.maxQuestionId();
-                QuestionV2 question = new QuestionV2(maxId+1);
+                QuestionV2 question = new QuestionV2();
                 questionLab.addQuestion(question);
                 Intent intent = QuestionPagerActivity.newIntent(getActivity(),question.getId());
                 startActivity(intent);
